@@ -30,14 +30,11 @@
  * @return string Compiled HTML based on our arguments.
  */
 function twentytwenty_site_logo( $args = array(), $echo = true ) {
-	$logo       = get_custom_logo();
 	$site_title = get_bloginfo( 'name' );
 	$contents   = '';
 	$classname  = '';
 
 	$defaults = array(
-		'logo'        => '%1$s<span class="screen-reader-text">%2$s</span>',
-		'logo_class'  => 'site-logo',
 		'title'       => '<a href="%1$s">%2$s</a>',
 		'title_class' => 'site-title',
 		'home_wrap'   => '<h1 class="%1$s">%2$s</h1>',
@@ -83,41 +80,6 @@ function twentytwenty_site_logo( $args = array(), $echo = true ) {
 
 	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-}
-
-/**
- * Displays the site description.
- *
- * @param boolean $echo Echo or return the html.
- * @return string The HTML to display.
- */
-function twentytwenty_site_description( $echo = true ) {
-	$description = get_bloginfo( 'description' );
-
-	if ( ! $description ) {
-		return;
-	}
-
-	$wrapper = '<div class="site-description">%s</div><!-- .site-description -->';
-
-	$html = sprintf( $wrapper, esc_html( $description ) );
-
-	/**
-	 * Filters the HTML for the site description.
-	 *
-	 * @since Twenty Twenty 1.0
-	 *
-	 * @param string $html         The HTML to display.
-	 * @param string $description  Site description via `bloginfo()`.
-	 * @param string $wrapper      The format used in case you want to reuse it in a `sprintf()`.
-	 */
-	$html = apply_filters( 'twentytwenty_site_description', $html, $description, $wrapper );
-
-	if ( ! $echo ) {
-		return $html;
-	}
-
-	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
@@ -637,7 +599,7 @@ function twentytwenty_body_classes( $classes ) {
 	}
 
 	// Check whether the current page should have an overlay header.
-	if ( is_page_template( array( 'templates/template-cover.php' ) ) ) {
+	if ( is_page_template( array( 'templates/template-portfolio.php' ) ) ) {
 		$classes[] = 'overlay-header';
 	}
 
@@ -646,10 +608,6 @@ function twentytwenty_body_classes( $classes ) {
 		$classes[] = 'has-full-width-content';
 	}
 
-	// Check for enabled search.
-	if ( true === get_theme_mod( 'enable_header_search', true ) ) {
-		$classes[] = 'enable-search-modal';
-	}
 
 	// Check for post thumbnail.
 	if ( is_singular() && has_post_thumbnail() ) {
@@ -689,10 +647,9 @@ function twentytwenty_body_classes( $classes ) {
 	$has_footer_menu = has_nav_menu( 'footer' );
 	$has_social_menu = has_nav_menu( 'social' );
 	$has_sidebar_1   = is_active_sidebar( 'sidebar-1' );
-	$has_sidebar_2   = is_active_sidebar( 'sidebar-2' );
 
 	// Add a class indicating whether those elements are output.
-	if ( $has_footer_menu || $has_social_menu || $has_sidebar_1 || $has_sidebar_2 ) {
+	if ( $has_footer_menu || $has_social_menu || $has_sidebar_1 ) {
 		$classes[] = 'footer-top-visible';
 	} else {
 		$classes[] = 'footer-top-hidden';

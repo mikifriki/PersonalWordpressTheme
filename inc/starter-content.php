@@ -26,11 +26,7 @@ function twentytwenty_get_starter_content() {
 			// Place one core-defined widgets in the first footer widget area.
 			'sidebar-1' => array(
 				'text_about',
-			),
-			// Place one core-defined widgets in the second footer widget area.
-			'sidebar-2' => array(
-				'text_business_info',
-			),
+			)
 		),
 
 		// Create the custom image attachments used as post thumbnails for pages.
